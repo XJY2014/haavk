@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加入我们 // HAAVK CORP</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>加入哈夫克</h2>
+    <p>我们持续寻找有责任感、有专业能力的人才。以下是当前开放职位。</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>安全工程师 <span class="tag">全职</span></h3>
+      <p>负责安全方案设计与现场部署，要求 3 年以上相关经验。</p>
+      <button class="btn applyBtn" data-job="安全工程师" style="margin-top:12px;">投递简历</button>
+    </div>
+    <div class="card">
+      <h3>运营专员 <span class="tag">全职</span></h3>
+      <p>负责项目运营与客户沟通，要求良好的协调与执行能力。</p>
+      <button class="btn applyBtn" data-job="运营专员" style="margin-top:12px;">投递简历</button>
+    </div>
+    <div class="card">
+      <h3>外勤干员 <span class="tag">全职</span></h3>
+      <p>负责现场任务执行，要求身体素质良好，能适应出差。</p>
+      <button class="btn applyBtn" data-job="外勤干员" style="margin-top:12px;">投递简历</button>
+    </div>
+    <div class="card">
+      <h3>技术实习生 <span class="tag">实习</span></h3>
+      <p>参与安全技术研发，要求计算机相关专业在读。</p>
+      <button class="btn applyBtn" data-job="技术实习生" style="margin-top:12px;">投递简历</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>投递状态</h2>
+    <div style="font-size:13px; color:var(--dim);" id="applyStatus">尚未投递任何职位。</div>
+  </div>
+</div>
+<script src="../js/shared.js?v=3"></script>
+<script>
+  injectTopbar("careers");
+  addVisited("careers");
+
+  const applyStatus = document.getElementById("applyStatus");
+
+  function renderApply() {
+    const p = loadProgress();
+    if (p.applications > 0) {
+      applyStatus.innerHTML = `<span style="color:var(--accent);">你已投递 ${p.applications} 个职位，HR 将尽快与你联系。</span>`;
+    }
+  }
+
+  document.querySelectorAll(".applyBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const p = loadProgress();
+      p.applications += 1;
+      saveProgress(p);
+      toast(`已投递：${btn.dataset.job}`);
+      btn.disabled = true;
+      btn.textContent = "已投递";
+      renderApply();
+    });
+  });
+
+  renderApply();
+</script>
+</body>
+</html>
