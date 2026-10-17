@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>寻人启事 // HAAVK</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>&gt; 人员信息 · 待补充</h2>
+    <div id="personList"></div>
+  </div>
+  <div class="panel">
+    <h2>&gt; 状态</h2>
+    <div class="log" id="status"></div>
+  </div>
+</div>
+<script src="../js/shared.js"></script>
+<script>
+  injectTopbar("missing");
+
+  const PERSONS = [
+    { id: "wuming", name: "无名", desc: "身份信息缺失，提供线索以解锁。", reward: 100 },
+    { id: "zoya", name: "佐娅", desc: "资料被加密，需要进一步骇入。", reward: 100 }
+  ];
+
+  const listEl = document.getElementById("personList");
+  const statusEl = document.getElementById("status");
+
+  function render() {
+    const p = loadProgress();
+    listEl.innerHTML = "";
+    PERSONS.forEach(person => {
+      const done = p.clues.includes(person.id);
+      const div = document.createElement("div");
+      div.className = "item-row";
+      div.innerHTML = `
+        <div style="flex:1;">
+          <div style="font-size:13px; color:${done ? 'var(--green)' : 'var(--warn)'};">
+            ${person.name} ${done ? '<span class="tag ok">已解锁</span>' : ''}
+          </div>
+          <div style="font-size:11px; color:var(--dim); margin-top:4px;">${person.desc}</div>
+        </div>
+        <button class="btn" style="font-size:11px; padding:6px 12px;" ${done ? 'disabled' : ''}>
+          ${done ? '已完成' : '提交线索 +100'}
+        </button>
+      `;
+      const btn = div.querySelector("button");
+      if (!done) btn.onclick = () => {
+        const cur = loadProgress();
+        if (cur.clues.includes(person.id)) return;
+        cur.clues.push(person.id);
+        cur.decodePoints += person.reward;
+        saveProgress(cur);
+        toast(`${person.name} 线索已提交，获得 ${person.reward} 破译点`);
+        render();
+      };
+      listEl.appendChild(div);
+    });
+
+    if (!isHacked(p, "about")) {
+      statusEl.innerHTML = '<span class="warn">前置条件：需先骇入“关于我们”主站。</span>';
+    } else if (p.clues.length === PERSONS.length) {
+      statusEl.innerHTML = '<span class="ok">全部线索已提交。前往“解决方案”完成最后一步。</span>';
+    } else {
+      statusEl.innerHTML = `<span class="ok">已提交 ${p.clues.length} / ${PERSONS.length} 条线索。</span>`;
+    }
+  }
+
+  render();
+</script>
+</body>
+</html>
