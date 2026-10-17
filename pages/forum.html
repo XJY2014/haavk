@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>员工论坛 // HAAVK</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>&gt; 员工论坛 · 帖子列表</h2>
+    <div id="posts"></div>
+  </div>
+  <div class="panel">
+    <h2>&gt; 渗透操作</h2>
+    <div class="log" id="pointsInfo"></div>
+    <div class="btn-row" style="margin-top:14px;">
+      <button class="btn" id="hackBtn" disabled>骇入论坛节点（消耗 100 破译点）</button>
+    </div>
+    <div class="log" id="status" style="margin-top:12px;"></div>
+  </div>
+</div>
+<script src="../js/shared.js"></script>
+<script>
+  injectTopbar("forum");
+
+  const POSTS = [
+    { id: "p1", title: "【讨论】关于近期装备发放的疑问", author: "匿名员工", body: "最近仓库里的装备好像少了不少，有人知道怎么回事吗？" },
+    { id: "p2", title: "【求助】有没有人能跟我换班？", author: "夜班专员", body: "家里临时有事，求好心人帮忙顶一个夜班，必有重谢。" },
+    { id: "p3", title: "【公告】效能部关于数据收集的通知", author: "效能部", body: "请各位员工配合完成本周的数据采集任务，逾期将影响绩效。" },
+    { id: "p4", title: "【闲聊】今天食堂的咖啡是不是换配方了", author: "摸鱼人", body: "感觉今天的咖啡特别苦，是不是换了供应商？" }
+  ];
+
+  const postsEl = document.getElementById("posts");
+  const hackBtn = document.getElementById("hackBtn");
+  const statusEl = document.getElementById("status");
+  const pointsInfo = document.getElementById("pointsInfo");
+
+  function render() {
+    const p = loadProgress();
+    pointsInfo.innerHTML = `当前破译点：<span class="ok">${p.decodePoints}</span>`;
+
+    postsEl.innerHTML = "";
+    POSTS.forEach(post => {
+      const replied = p.repliedPosts.includes(post.id);
+      const div = document.createElement("div");
+      div.className = "item-row";
+      div.innerHTML = `
+        <div style="flex:1;">
+          <div style="font-size:13px;">${post.title}</div>
+          <div style="font-size:11px; color:var(--dim); margin-top:2px;">${post.author}</div>
+          <div style="font-size:11px; color:var(--dim); margin-top:6px;">${post.body}</div>
+        </div>
+        <button class="btn" style="font-size:11px; padding:6px 12px;" ${replied ? 'disabled' : ''}>
+          ${replied ? '已回复' : '回复 +25'}
+        </button>
+      `;
+      const btn = div.querySelector("button");
+      if (!replied) btn.onclick = () => {
+        const cur = loadProgress();
+        if (cur.repliedPosts.includes(post.id)) return;
+        cur.repliedPosts.push(post.id);
+        cur.decodePoints += 25;
+        saveProgress(cur);
+        toast("回复成功，获得 25 破译点");
+        render();
+      };
+      postsEl.appendChild(div);
+    });
+
+    const hacked = isHacked(p, "forum");
+    if (hacked) {
+      hackBtn.disabled = true;
+      hackBtn.textContent = "论坛节点已骇入";
+      statusEl.innerHTML = '<span class="ok">[OK] 论坛节点已被接管。</span>';
+    } else {
+      hackBtn.disabled = p.decodePoints < 100;
+      hackBtn.textContent = "骇入论坛节点（消耗 100 破译点）";
+      statusEl.innerHTML = p.decodePoints < 100
+        ? '<span class="warn">[WARN] 破译点不足，回复帖子可获取点数。</span>'
+        : '<span class="ok">[READY] 破译点充足，可以执行骇入。</span>';
+    }
+  }
+
+  hackBtn.onclick = () => {
+    const p = loadProgress();
+    if (p.decodePoints < 100 || isHacked(p, "forum")) return;
+    p.decodePoints -= 100;
+    p.hacked.push("forum");
+    saveProgress(p);
+    toast("论坛节点骇入成功");
+    render();
+  };
+
+  render();
+</script>
+</body>
+</html>
