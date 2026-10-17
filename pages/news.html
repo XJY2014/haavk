@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新闻动态 // HAAVK CORP</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>新闻动态</h2>
+    <div class="news-item"><span class="date">2035-06-12</span><span class="title">哈夫克集团发布新一代安全解决方案</span></div>
+    <div class="news-item"><span class="date">2035-05-28</span><span class="title">阿萨拉地区基础设施合作项目启动</span></div>
+    <div class="news-item"><span class="date">2035-05-10</span><span class="title">哈夫克学院首批学员结业</span></div>
+    <div class="news-item"><span class="date">2035-04-22</span><span class="title">集团完成年度安全演练</span></div>
+    <div class="news-item"><span class="date">2035-03-15</span><span class="title">哈夫克与多家机构签署合作备忘录</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>订阅动态</h2>
+    <p>留下邮箱，第一时间获取哈夫克集团最新消息。</p>
+    <div class="form-row" style="margin-top:14px;">
+      <input type="text" id="emailInput" placeholder="your@email.com">
+    </div>
+    <button class="btn primary" id="subscribeBtn">订阅</button>
+    <div style="margin-top:12px; font-size:12px; color:var(--dim);" id="subscribeStatus"></div>
+  </div>
+</div>
+<script src="../js/shared.js?v=3"></script>
+<script>
+  injectTopbar("news");
+  addVisited("news");
+
+  const emailInput = document.getElementById("emailInput");
+  const subscribeBtn = document.getElementById("subscribeBtn");
+  const subscribeStatus = document.getElementById("subscribeStatus");
+
+  function renderSubscribe() {
+    const p = loadProgress();
+    if (p.subscribed) {
+      subscribeBtn.disabled = true;
+      subscribeBtn.textContent = "已订阅";
+      subscribeStatus.innerHTML = '<span style="color:var(--accent);">你已成功订阅哈夫克集团动态。</span>';
+      emailInput.disabled = true;
+    }
+  }
+
+  subscribeBtn.addEventListener("click", () => {
+    const p = loadProgress();
+    if (p.subscribed) return;
+    const val = emailInput.value.trim();
+    if (!val || !val.includes("@")) {
+      subscribeStatus.textContent = "请输入有效的邮箱地址。";
+      return;
+    }
+    p.subscribed = true;
+    saveProgress(p);
+    toast("订阅成功");
+    renderSubscribe();
+  });
+
+  renderSubscribe();
+</script>
+</body>
+</html>
