@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>业务领域 // HAAVK CORP</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>业务领域</h2>
+    <p>哈夫克集团围绕安全需求，提供从咨询、部署到运营的全周期服务。</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>基础设施防护</h3>
+      <p>为能源、交通、通信等关键基础设施提供风险评估、防护设计与持续监测。</p>
+    </div>
+    <div class="card">
+      <h3>应急响应</h3>
+      <p>建立快速响应机制，提供现场处置、人员疏散与事后复盘支持。</p>
+    </div>
+    <div class="card">
+      <h3>技术咨询</h3>
+      <p>面向政企客户提供安全架构设计、合规咨询与数字化转型建议。</p>
+    </div>
+    <div class="card">
+      <h3>人员培训</h3>
+      <p>通过哈夫克学院，为行业培养具备实战能力的安全专业人才。</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>服务流程</h2>
+    <div class="grid-3">
+      <div class="card"><div class="num">01</div><h3>需求评估</h3><p>深入了解客户场景与风险点。</p></div>
+      <div class="card"><div class="num">02</div><h3>方案设计</h3><p>定制可落地的安全解决方案。</p></div>
+      <div class="card"><div class="num">03</div><h3>持续运营</h3><p>部署后持续监测与优化迭代。</p></div>
+    </div>
+  </div>
+</div>
+<script src="../js/shared.js?v=3"></script>
+<script>
+  injectTopbar("business");
+  addVisited("business");
+</script>
+</body>
+</html>
