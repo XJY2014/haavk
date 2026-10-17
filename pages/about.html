@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于我们 // HAAVK</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="panel">
+    <h2>&gt; 哈夫克集团 · 公开资料</h2>
+    <div class="log">
+      <div>哈夫克集团致力于为阿萨拉地区提供先进的安全解决方案。</div>
+      <div>我们的员工是公司最宝贵的资产。</div>
+      <div style="margin-top:8px;">管理层：</div>
+      <div style="display:flex; gap:12px; margin-top:8px; flex-wrap:wrap;">
+        <div class="card" style="min-width:120px; text-align:center;">
+          <h3 style="color:var(--green);">哈德森</h3><p>首席执行官</p>
+        </div>
+        <div class="card" style="min-width:120px; text-align:center;">
+          <h3 style="color:var(--warn);">蝶</h3><p>安全主管</p>
+        </div>
+        <div class="card" style="min-width:120px; text-align:center;">
+          <h3 style="color:var(--dim);">疾风</h3><p>外勤干员</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>&gt; 主站骇入</h2>
+    <div class="log" id="preInfo"></div>
+    <div class="btn-row" style="margin-top:14px;">
+      <button class="btn" id="hackBtn" disabled>执行主站骇入</button>
+    </div>
+    <div class="log" id="status" style="margin-top:12px;"></div>
+  </div>
+</div>
+<script src="../js/shared.js"></script>
+<script>
+  injectTopbar("about");
+
+  const preInfo = document.getElementById("preInfo");
+  const hackBtn = document.getElementById("hackBtn");
+  const statusEl = document.getElementById("status");
+
+  function render() {
+    const p = loadProgress();
+    if (isHacked(p, "about")) {
+      preInfo.innerHTML = '<span class="ok">主站已被完全控制。奖励已发放。</span>';
+      statusEl.innerHTML = '<span class="ok">[OK] 劫持成功，获得 500 破译点。</span>';
+      hackBtn.disabled = true;
+      hackBtn.textContent = "主站已骇入";
+    } else if (!isHacked(p, "forum")) {
+      preInfo.innerHTML = '<span class="warn">前置条件：需先骇入员工论坛节点。</span>';
+      statusEl.innerHTML = '<span class="warn">[LOCKED] 论坛节点未接管。</span>';
+      hackBtn.disabled = true;
+    } else {
+      preInfo.innerHTML = '前置条件已满足。执行骇入将劫持主站并获得 500 破译点。';
+      statusEl.innerHTML = '<span class="ok">[READY] 准备就绪。</span>';
+      hackBtn.disabled = false;
+    }
+  }
+
+  hackBtn.onclick = () => {
+    const p = loadProgress();
+    if (isHacked(p, "about") || !isHacked(p, "forum")) return;
+    p.decodePoints += 500;
+    p.hacked.push("about");
+    saveProgress(p);
+    toast("主站骇入成功，获得 500 破译点");
+    render();
+  };
+
+  render();
+</script>
+</body>
+</html>
