@@ -3,61 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAAVK CORP // 哈夫克集团</title>
+<title>HAAVK // 天空属于哈夫克</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container">
-  <div class="hero">
-    <h1>HAAVK CORP</h1>
-    <p>哈夫克集团致力于为阿萨拉地区提供先进的安全解决方案。我们以技术为驱动，以责任为基石，守护每一份信任。</p>
-    <div class="btn-row" style="justify-content:center; margin-top:24px;">
-      <a class="btn primary" href="pages/about.html">了解哈夫克</a>
-      <a class="btn" href="pages/business.html">业务领域</a>
-    </div>
-  </div>
 
-  <div class="grid-3">
-    <div class="card">
-      <div class="num">15+</div>
-      <h3>年行业经验</h3>
-      <p>深耕安全解决方案领域，服务覆盖多个地区。</p>
-    </div>
-    <div class="card">
-      <div class="num">3000+</div>
-      <h3>专业员工</h3>
-      <p>技术、运营、外勤团队协同，保障任务交付。</p>
-    </div>
-    <div class="card">
-      <div class="num">99.9%</div>
-      <h3>服务可用性</h3>
-      <p>关键基础设施持续稳定运行，值得信赖。</p>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="panel">
-      <h2>最新动态</h2>
-      <div class="news-item"><span class="date">2035-06-12</span><a class="title" href="pages/news.html">哈夫克集团发布新一代安全解决方案</a></div>
-      <div class="news-item"><span class="date">2035-05-28</span><a class="title" href="pages/news.html">阿萨拉地区基础设施合作项目启动</a></div>
-      <div class="news-item"><span class="date">2035-05-10</span><a class="title" href="pages/news.html">哈夫克学院首批学员结业</a></div>
-    </div>
-    <div class="panel">
-      <h2>加入我们</h2>
-      <p>我们持续寻找有责任感、有专业能力的人才。无论技术、运营还是外勤，哈夫克都为你提供成长的舞台。</p>
-      <div class="btn-row" style="margin-top:18px;">
-        <a class="btn" href="pages/careers.html">查看职位</a>
-        <a class="btn" href="pages/contact.html">联系我们</a>
+  <!-- 顶部导航 -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="back-btn">＜ 活动</div>
+      <div class="logo-area">
+        <div class="logo-icon"></div>
+        <span>HAAVK</span>
       </div>
-      <div class="tag" id="visitedBadge" style="margin-top:16px;"></div>
+      <nav class="nav-links">
+        <a href="#" class="active">关于我们</a>
+        <a href="#">员工论坛</a>
+        <a href="#">解决方案</a>
+        <a href="#">寻人启事</a>
+      </nav>
     </div>
-  </div>
-</div>
+    <div class="topbar-right">
+      <div class="point-icon"></div>
+      <span>注意力点数 | 2314</span>
+    </div>
+  </header>
 
-<script src="js/shared.js?v=3"></script>
-<script>
-  injectTopbar("index");
-  addVisited("index");
+  <!-- 主视觉区 -->
+  <main class="main-content">
+    <div class="hero-left">
+      <h1 class="hero-title">效率，铸就未来</h1>
+      <p class="hero-subtitle">让每一项资源归于效率，让每一个变量服从未来。</p>
+      <div class="indicator-dots">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- 建议把截图里的哈德森扣下来替换这里的 src -->
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" alt="哈德森" class="hero-image" style="filter: grayscale(100%) contrast(1.2);">
+    </div>
+
+    <!-- 底部卡片区 -->
+    <div class="bottom-section">
+      
+      <!-- 左栏：优秀员工 -->
+      <div class="employees-section">
+        <div class="section-title">优秀员工</div>
+        <div class="emp-cards">
+          <!-- 蓝底特殊卡片（莉娜） -->
+          <div class="emp-card-blue">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=300&auto=format&fit=crop" alt="莉娜">
+            <div class="emp-info">
+              <div class="emp-name">莉娜</div>
+              <div class="emp-desc">急救医疗专家<br>为高净值客户提供...</div>
+            </div>
+          </div>
+
+          <!-- 白底卡片（克莱尔） -->
+          <div class="emp-card-img">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" alt="克莱尔">
+            <div class="emp-info">
+              <div class="emp-name">克莱尔</div>
+              <div class="emp-desc">无线电专家</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右栏：员工之声（纯文字卡片） -->
+      <div class="voices-section">
+        <div class="section-title">员工之声</div>
+        <div class="voices-grid">
+          <div class="voice-card">
+            <div class="voice-header">
+              <div class="voice-name">磐石</div>
+              <div class="voice-role">工程部门</div>
+            </div>
+            <div class="voice-quote">不问工资多少<br>只看奉献大小</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-header">
+              <div class="voice-name">夜枭</div>
+              <div class="voice-role">情报部门</div>
+            </div>
+            <div class="voice-quote">理解的要执行<br>不理解的也要执行</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-header">
+              <div class="voice-name">雷霆</div>
+              <div class="voice-role">安保部门</div>
+            </div>
+            <div class="voice-quote">你们被包围了<br>你拿什么跟我斗</div>
+          </div>
+          <div class="voice-card">
+            <div class="voice-header">
+              <div class="voice-name">道长</div>
+              <div class="voice-role">后勤部门</div>
+            </div>
+            <div class="voice-quote">敬畏未知的力量<br>守护大家的平静</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
   renderVisitedBadge(document.getElementById("visitedBadge"));
 </script>
 </body>
