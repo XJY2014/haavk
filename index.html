@@ -3,115 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAAVK CORP // 控制台</title>
+<title>HAAVK CORP // 哈夫克集团</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="container">
-  <div class="panel">
-    <h2>&gt; 骇爪控制台</h2>
-    <div class="log">
-      <div>> 已连接至 HAAVK 内部网络。</div>
-      <div>> 当前会话目标：渗透集团内部节点，获取破译点数。</div>
+  <div class="hero">
+    <h1>HAAVK CORP</h1>
+    <p>哈夫克集团致力于为阿萨拉地区提供先进的安全解决方案。我们以技术为驱动，以责任为基石，守护每一份信任。</p>
+    <div class="btn-row" style="justify-content:center; margin-top:24px;">
+      <a class="btn primary" href="pages/about.html">了解哈夫克</a>
+      <a class="btn" href="pages/business.html">业务领域</a>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="log" id="progressLabel" style="margin-top:8px;">节点渗透进度：0 / 4</div>
   </div>
 
-  <div class="panel">
-    <h2>&gt; 可渗透模块</h2>
-    <div class="grid-2" id="moduleGrid"></div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="num">15+</div>
+      <h3>年行业经验</h3>
+      <p>深耕安全解决方案领域，服务覆盖多个地区。</p>
+    </div>
+    <div class="card">
+      <div class="num">3000+</div>
+      <h3>专业员工</h3>
+      <p>技术、运营、外勤团队协同，保障任务交付。</p>
+    </div>
+    <div class="card">
+      <div class="num">99.9%</div>
+      <h3>服务可用性</h3>
+      <p>关键基础设施持续稳定运行，值得信赖。</p>
+    </div>
   </div>
 
   <div class="grid-2">
     <div class="panel">
-      <h2>&gt; 终端日志</h2>
-      <div class="terminal" id="terminal"></div>
+      <h2>最新动态</h2>
+      <div class="news-item"><span class="date">2035-06-12</span><a class="title" href="pages/news.html">哈夫克集团发布新一代安全解决方案</a></div>
+      <div class="news-item"><span class="date">2035-05-28</span><a class="title" href="pages/news.html">阿萨拉地区基础设施合作项目启动</a></div>
+      <div class="news-item"><span class="date">2035-05-10</span><a class="title" href="pages/news.html">哈夫克学院首批学员结业</a></div>
     </div>
     <div class="panel">
-      <h2>&gt; 操作</h2>
-      <div class="log" id="hintBox"></div>
-      <div class="btn-row" style="margin-top:16px;">
-        <button class="btn" id="toForumBtn">进入员工论坛</button>
-        <button class="btn warn" id="resetBtn">重置全部进度</button>
+      <h2>加入我们</h2>
+      <p>我们持续寻找有责任感、有专业能力的人才。无论技术、运营还是外勤，哈夫克都为你提供成长的舞台。</p>
+      <div class="btn-row" style="margin-top:18px;">
+        <a class="btn" href="pages/careers.html">查看职位</a>
+        <a class="btn" href="pages/contact.html">联系我们</a>
       </div>
+      <div class="tag" id="visitedBadge" style="margin-top:16px;"></div>
     </div>
   </div>
 </div>
 
-<script src="js/shared.js"></script>
+<script src="js/shared.js?v=3"></script>
 <script>
   injectTopbar("index");
-
-  const p = loadProgress();
-  const terminal = document.getElementById("terminal");
-  const fill = document.getElementById("progressFill");
-  const label = document.getElementById("progressLabel");
-  const grid = document.getElementById("moduleGrid");
-  const hintBox = document.getElementById("hintBox");
-
-  function render() {
-    const cur = loadProgress();
-    // 进度
-    const pct = (cur.hacked.length / NODES.length) * 100;
-    fill.style.width = pct + "%";
-    label.textContent = `节点渗透进度：${cur.hacked.length} / ${NODES.length}`;
-
-    // 模块卡片
-    grid.innerHTML = "";
-    NODES.forEach(node => {
-      const hacked = isHacked(cur, node.id);
-      const card = document.createElement("div");
-      card.className = "card" + (hacked ? "" : " locked");
-      card.innerHTML = `
-        <h3>${node.name} ${hacked ? '<span class="tag ok">已渗透</span>' : '<span class="tag">未渗透</span>'}</h3>
-        <p>${hacked ? "该节点已被接管，可随时访问。" : "尚未完成渗透，进入该模块继续操作。"}</p>
-      `;
-      card.style.cursor = "pointer";
-      card.addEventListener("click", () => {
-        location.href = node.page;
-      });
-      grid.appendChild(card);
-    });
-
-    // 终端日志
-    terminal.innerHTML = "";
-    addLog(terminal, "> HAAVK 内部网络接入终端 v2.0", "ok");
-    addLog(terminal, "> 破译点数：" + cur.decodePoints, "");
-    cur.hacked.forEach(id => {
-      const node = NODES.find(n => n.id === id);
-      if (node) addLog(terminal, `[OK] ${node.name} 节点已接管。`, "ok");
-    });
-    if (cur.priceChanged) addLog(terminal, "[WARN] 解决方案价格已被篡改。", "warn");
-    if (cur.clues.length > 0) addLog(terminal, `[OK] 已提交 ${cur.clues.length} 条寻人线索。`, "ok");
-
-    // 提示
-    if (cur.hacked.length === 0) {
-      hintBox.innerHTML = '<span class="warn">提示：先进入员工论坛回复帖子获取破译点。</span>';
-    } else if (cur.hacked.length === 1 && !isHacked(cur, "about")) {
-      hintBox.innerHTML = '提示：前往“关于我们”执行主站骇入。';
-    } else if (isHacked(cur, "about") && cur.clues.length < 2) {
-      hintBox.innerHTML = '提示：前往“寻人启事”提交线索。';
-    } else if (cur.clues.length >= 2 && !cur.priceChanged) {
-      hintBox.innerHTML = '提示：前往“解决方案”篡改商品价格。';
-    } else if (cur.priceChanged) {
-      hintBox.innerHTML = '<span class="ok">全部渗透完成。你已完全控制 HAAVK 内部网络。</span>';
-    } else {
-      hintBox.textContent = '继续推进渗透。';
-    }
-  }
-
-  document.getElementById("toForumBtn").onclick = () => {
-    location.href = "pages/forum.html";
-  };
-  document.getElementById("resetBtn").onclick = () => {
-    if (confirm("确定要重置全部进度吗？")) resetProgress();
-  };
-
-  render();
-</script>
-</body>
-</html>
+  addVisited("index");
   renderVisitedBadge(document.getElementById("visitedBadge"));
 </script>
 </body>
