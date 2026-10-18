@@ -3,113 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAAVK // 天空属于哈夫克</title>
+<title>HAAVK CORP // 控制台</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <!-- 顶部导航 -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <div class="back-btn">＜ 活动</div>
-      <div class="logo-area">
-        <div class="logo-icon"></div>
-        <span>HAAVK</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#" class="active">关于我们</a>
-        <a href="#">员工论坛</a>
-        <a href="#">解决方案</a>
-        <a href="#">寻人启事</a>
-      </nav>
+<div class="container">
+  <div class="panel">
+    <h2>&gt; 骇爪控制台</h2>
+    <div class="log">
+      <div>> 已连接至 HAAVK 内部网络。</div>
+      <div>> 当前会话目标：渗透集团内部节点，获取破译点数。</div>
     </div>
-    <div class="topbar-right">
-      <div class="point-icon"></div>
-      <span>注意力点数 | 2314</span>
-    </div>
-  </header>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="log" id="progressLabel" style="margin-top:8px;">节点渗透进度：0 / 4</div>
+  </div>
 
-  <!-- 主视觉区 -->
-  <main class="main-content">
-    <div class="hero-left">
-      <h1 class="hero-title">效率，铸就未来</h1>
-      <p class="hero-subtitle">让每一项资源归于效率，让每一个变量服从未来。</p>
-      <div class="indicator-dots">
-        <span class="active"></span>
-        <span></span>
-        <span></span>
+  <div class="panel">
+    <h2>&gt; 可渗透模块</h2>
+    <div class="grid-2" id="moduleGrid"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <h2>&gt; 终端日志</h2>
+      <div class="terminal" id="terminal"></div>
+    </div>
+    <div class="panel">
+      <h2>&gt; 操作</h2>
+      <div class="log" id="hintBox"></div>
+      <div class="btn-row" style="margin-top:16px;">
+        <button class="btn" id="toForumBtn">进入员工论坛</button>
+        <button class="btn warn" id="resetBtn">重置全部进度</button>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="hero-right">
-      <!-- 建议把截图里的哈德森扣下来替换这里的 src -->
-      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" alt="哈德森" class="hero-image" style="filter: grayscale(100%) contrast(1.2);">
-    </div>
+<script src="js/shared.js"></script>
+<script>
+  injectTopbar("index");
 
-    <!-- 底部卡片区 -->
-    <div class="bottom-section">
-      
-      <!-- 左栏：优秀员工 -->
-      <div class="employees-section">
-        <div class="section-title">优秀员工</div>
-        <div class="emp-cards">
-          <!-- 蓝底特殊卡片（莉娜） -->
-          <div class="emp-card-blue">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=300&auto=format&fit=crop" alt="莉娜">
-            <div class="emp-info">
-              <div class="emp-name">莉娜</div>
-              <div class="emp-desc">急救医疗专家<br>为高净值客户提供...</div>
-            </div>
-          </div>
+  const p = loadProgress();
+  const terminal = document.getElementById("terminal");
+  const fill = document.getElementById("progressFill");
+  const label = document.getElementById("progressLabel");
+  const grid = document.getElementById("moduleGrid");
+  const hintBox = document.getElementById("hintBox");
 
-          <!-- 白底卡片（克莱尔） -->
-          <div class="emp-card-img">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" alt="克莱尔">
-            <div class="emp-info">
-              <div class="emp-name">克莱尔</div>
-              <div class="emp-desc">无线电专家</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  function render() {
+    const cur = loadProgress();
+    // 进度
+    const pct = (cur.hacked.length / NODES.length) * 100;
+    fill.style.width = pct + "%";
+    label.textContent = `节点渗透进度：${cur.hacked.length} / ${NODES.length}`;
 
-      <!-- 右栏：员工之声（纯文字卡片） -->
-      <div class="voices-section">
-        <div class="section-title">员工之声</div>
-        <div class="voices-grid">
-          <div class="voice-card">
-            <div class="voice-header">
-              <div class="voice-name">磐石</div>
-              <div class="voice-role">工程部门</div>
-            </div>
-            <div class="voice-quote">不问工资多少<br>只看奉献大小</div>
-          </div>
-          <div class="voice-card">
-            <div class="voice-header">
-              <div class="voice-name">夜枭</div>
-              <div class="voice-role">情报部门</div>
-            </div>
-            <div class="voice-quote">理解的要执行<br>不理解的也要执行</div>
-          </div>
-          <div class="voice-card">
-            <div class="voice-header">
-              <div class="voice-name">雷霆</div>
-              <div class="voice-role">安保部门</div>
-            </div>
-            <div class="voice-quote">你们被包围了<br>你拿什么跟我斗</div>
-          </div>
-          <div class="voice-card">
-            <div class="voice-header">
-              <div class="voice-name">道长</div>
-              <div class="voice-role">后勤部门</div>
-            </div>
-            <div class="voice-quote">敬畏未知的力量<br>守护大家的平静</div>
-          </div>
-        </div>
-      </div>
+    // 模块卡片
+    grid.innerHTML = "";
+    NODES.forEach(node => {
+      const hacked = isHacked(cur, node.id);
+      const card = document.createElement("div");
+      card.className = "card" + (hacked ? "" : " locked");
+      card.innerHTML = `
+        <h3>${node.name} ${hacked ? '<span class="tag ok">已渗透</span>' : '<span class="tag">未渗透</span>'}</h3>
+        <p>${hacked ? "该节点已被接管，可随时访问。" : "尚未完成渗透，进入该模块继续操作。"}</p>
+      `;
+      card.style.cursor = "pointer";
+      card.addEventListener("click", () => {
+        location.href = node.page;
+      });
+      grid.appendChild(card);
+    });
 
-    </div>
-  </main>
+    // 终端日志
+    terminal.innerHTML = "";
+    addLog(terminal, "> HAAVK 内部网络接入终端 v2.0", "ok");
+    addLog(terminal, "> 破译点数：" + cur.decodePoints, "");
+    cur.hacked.forEach(id => {
+      const node = NODES.find(n => n.id === id);
+      if (node) addLog(terminal, `[OK] ${node.name} 节点已接管。`, "ok");
+    });
+    if (cur.priceChanged) addLog(terminal, "[WARN] 解决方案价格已被篡改。", "warn");
+    if (cur.clues.length > 0) addLog(terminal, `[OK] 已提交 ${cur.clues.length} 条寻人线索。`, "ok");
+
+    // 提示
+    if (cur.hacked.length === 0) {
+      hintBox.innerHTML = '<span class="warn">提示：先进入员工论坛回复帖子获取破译点。</span>';
+    } else if (cur.hacked.length === 1 && !isHacked(cur, "about")) {
+      hintBox.innerHTML = '提示：前往“关于我们”执行主站骇入。';
+    } else if (isHacked(cur, "about") && cur.clues.length < 2) {
+      hintBox.innerHTML = '提示：前往“寻人启事”提交线索。';
+    } else if (cur.clues.length >= 2 && !cur.priceChanged) {
+      hintBox.innerHTML = '提示：前往“解决方案”篡改商品价格。';
+    } else if (cur.priceChanged) {
+      hintBox.innerHTML = '<span class="ok">全部渗透完成。你已完全控制 HAAVK 内部网络。</span>';
+    } else {
+      hintBox.textContent = '继续推进渗透。';
+    }
+  }
+
+  document.getElementById("toForumBtn").onclick = () => {
+    location.href = "pages/forum.html";
+  };
+  document.getElementById("resetBtn").onclick = () => {
+    if (confirm("确定要重置全部进度吗？")) resetProgress();
+  };
+
+  render();
+</script>
 </body>
 </html>
   renderVisitedBadge(document.getElementById("visitedBadge"));
